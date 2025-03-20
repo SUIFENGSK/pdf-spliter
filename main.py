@@ -1,3 +1,4 @@
+import argparse
 from pdf2image import convert_from_path
 from PIL import Image
 import os
@@ -47,12 +48,16 @@ def pdf_to_images_horizontal_with_gap(pdf_path, output_folder, pages_per_image=3
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Convert PDF to images with horizontal merging.')
+    parser.add_argument('--dpi', type=int, default=300, help='Resolution for PDF conversion (default: 300)')
+    args = parser.parse_args()
+
     pdf_folder = "pdfData"
     horizontal_output_folder = "output_images"
     poppler_path = None  # Windows users can set the Poppler path, e.g., r'C:\path\to\poppler\bin'
     horizontal_gap = 50  # Pixel gap between horizontal images
     pages_per_image = 3
-    dpi = 300
+    dpi = args.dpi
 
     pdf_files = sorted(glob.glob(os.path.join(pdf_folder, "*.pdf")))
     if not pdf_files:
